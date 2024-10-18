@@ -13,25 +13,25 @@ services:
       - backendip="http://localhost:5000/"
       - IONIC_ENABLE_LIVE_RELOAD=true
 
-  backend:
-    build:
-      context: ./backend
-    container_name: lori-backend
-    ports:
-      - "5000:5000"
-    volumes:
-      - ./backend/:/usr/src/app/:rw,z
-    environment:
-      - FLASK_ENV=development
+  # backend:
+  #   build:
+  #     context: ./backend
+  #   container_name: lori-backend
+  #   ports:
+  #     - "5000:5000"
+  #   volumes:
+  #     - ./backend/:/usr/src/app/:rw,z
+  #   environment:
+  #     - FLASK_ENV=development
   
-  db:
-    image: postgres:latest
-    container_name: lori-database
-    environment:
-      POSTGRES_USER: loris
-      POSTGRES_PASSWORD: 123456
-      POSTGRES_DB: lori_database
-    volumes:
-      - ./database:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+  # db:
+  #   image: postgres:latest
+  #   container_name: lori-database
+  #   environment:
+  #     POSTGRES_USER: loris
+  #     POSTGRES_PASSWORD: 123456
+  #     POSTGRES_DB: lori_database
+  #   volumes:
+  #     - ./database:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
