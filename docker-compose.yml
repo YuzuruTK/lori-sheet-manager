@@ -2,7 +2,7 @@ services:
   frontend:
     build:
       context: ./frontend
-    container_name: lori-frontend
+    container_name: frontend
     ports:
       - "3000:3000"
     volumes:
@@ -13,25 +13,16 @@ services:
       - backendip="http://localhost:5000/"
       - IONIC_ENABLE_LIVE_RELOAD=true
 
-  # backend:
-  #   build:
-  #     context: ./backend
-  #   container_name: lori-backend
-  #   ports:
-  #     - "5000:5000"
-  #   volumes:
-  #     - ./backend/:/usr/src/app/:rw,z
-  #   environment:
-  #     - FLASK_ENV=development
-  
-  # db:
-  #   image: postgres:latest
-  #   container_name: lori-database
-  #   environment:
-  #     POSTGRES_USER: loris
-  #     POSTGRES_PASSWORD: 123456
-  #     POSTGRES_DB: lori_database
-  #   volumes:
-  #     - ./database:/var/lib/postgresql/data
-  #   ports:
-  #     - "5432:5432"
+  backend:
+    image: ghcr.io/muchobien/pocketbase:latest
+    container_name: backend
+    restart: unless-stopped
+    ports:
+      - "8090:8090"
+    volumes:
+      - ./database:/pb_data 
+    healthcheck: #optional (recommended) since v0.10.0
+      test: wget --no-verbose --tries=1 --spider http://localhost:8090/api/health || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 5
